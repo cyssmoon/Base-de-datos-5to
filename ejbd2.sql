@@ -1,42 +1,40 @@
-DROP DATABASE IF EXISTS empresa;
-CREATE DATABASE empresa;
-USE empresa;
+DROP DATABASE IF EXISTS Seguros;
+CREATE DATABASE Seguros;
+USE Seguros;
 
 
-CREATE TABLE proveedores(
-NIF CHAR(50) PRIMARY KEY,
-nombre CHAR(50),
-direccion CHAR(50)
+CREATE TABLE Clientes (
+    DNI INT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellido VARCHAR(50) NOT NULL,
+    Direccion VARCHAR(100),
+    Telefono VARCHAR(20),
+    Cuenta_bancaria VARCHAR(30),
+    Fecha_nacimiento DATE,
+    Sexo CHAR(1),
+    Anio_carnet YEAR
 );
 
 
-CREATE TABLE productos( 
-codigo INT PRIMARY KEY,
-nombre CHAR(50),
-precio DECIMAL (10,2),
-NIF_provee CHAR(11),
-FOREIGN KEY(NIF_provee) REFERENCES proveedores(NIF)
+CREATE TABLE Vehiculos (
+    Patente VARCHAR(10) PRIMARY KEY,
+    Tipo_seguro VARCHAR(50),
+    Marca VARCHAR(50),
+    Modelo VARCHAR(50),
+    Color VARCHAR(30),
+    DNI_cliente INT,
+    FOREIGN KEY (DNI_cliente) REFERENCES Clientes(DNI)
 );
 
 
-
-
-CREATE TABLE clientes(
-DNI int PRIMARY KEY,
-nombre CHAR(15),
-apellidos CHAR(15),
-direccion VARCHAR(15),
-fecha_nac DATE
+CREATE TABLE Accidentes (
+    Codigo_accidente INT PRIMARY KEY,
+    Lugar VARCHAR(100),
+    Fecha DATE,
+    Hora TIME,
+    Nro_vehiculos INT,
+    Patente VARCHAR(10),
+    FOREIGN KEY (Patente) REFERENCES Vehiculos(Patente)
 );
-
-
-CREATE TABLE produc_comprados(
-    ID INT, 
-    dni_comp INT,
-    codigo_prod INT,
-    PRIMARY KEY (dni_comp, codigo_prod),
-    FOREIGN KEY (dni_comp) REFERENCES clientes(DNI),
-    FOREIGN KEY (codigo_prod) REFERENCES productos(codigo)      
-); 
 
 
